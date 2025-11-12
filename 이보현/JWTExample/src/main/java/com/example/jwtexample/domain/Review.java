@@ -1,20 +1,12 @@
 package com.example.jwtexample.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review {
 
     @Id
@@ -30,13 +22,16 @@ public class Review {
     @JsonIgnore
     private Snack snack;
 
+    private String content;
+
     @Column(nullable = false)
-    private int score; // 1~10 점수
+    private int score;
 
     @Builder
-    public Review(User user, Snack snack, int score) {
+    public Review(User user, Snack snack, String content, int score) {
         this.user = user;
         this.snack = snack;
+        this.content = content;
         this.score = score;
     }
 }

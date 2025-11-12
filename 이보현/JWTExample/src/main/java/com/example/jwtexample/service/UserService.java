@@ -21,6 +21,11 @@ public class UserService {
     private final TokenProvider tokenProvider;
 
     public TokenDto signUp(UserSignUpDto userSignUpDto) {
+
+        if (userRepository.existsByEmail(userSignUpDto.getEmail())) {
+            throw new IllegalArgumentException("이미 등록된 이메일입니다.");
+        }
+
         User user = userRepository.save(User.builder()
                 .email(userSignUpDto.getEmail())
                 .password(passwordEncoder.encode(userSignUpDto.getPassword()))
